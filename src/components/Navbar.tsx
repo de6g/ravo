@@ -71,13 +71,13 @@ const Navbar = () => {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>
-                  <Link to="#login" className="w-full">تسجيل الدخول</Link>
+                  <Link to="/login" className="w-full">تسجيل الدخول</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link to="#register" className="w-full">إنشاء حساب</Link>
+                  <Link to="/register" className="w-full">إنشاء حساب</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link to="#account" className="w-full">حسابي</Link>
+                  <Link to="/account" className="w-full">حسابي</Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
