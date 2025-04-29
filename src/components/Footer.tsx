@@ -1,8 +1,19 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Category } from './CategoryGrid';
 
 const Footer = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  // Load categories from localStorage
+  useEffect(() => {
+    const savedCategories = localStorage.getItem('storeCategories');
+    if (savedCategories) {
+      setCategories(JSON.parse(savedCategories));
+    }
+  }, []);
+
   return (
     <footer className="bg-black text-white pt-12 pb-6">
       <div className="container mx-auto px-4">
@@ -41,21 +52,33 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-bold mb-4 text-gold">التصنيفات</h3>
             <ul className="space-y-2">
-              <li>
-                <Link to="#perfumes" className="text-gray-300 hover:text-gold transition-colors">العطور</Link>
-              </li>
-              <li>
-                <Link to="#electronics" className="text-gray-300 hover:text-gold transition-colors">الإلكترونيات</Link>
-              </li>
-              <li>
-                <Link to="#fashion" className="text-gray-300 hover:text-gold transition-colors">الأزياء</Link>
-              </li>
-              <li>
-                <Link to="#home" className="text-gray-300 hover:text-gold transition-colors">المنزل</Link>
-              </li>
-              <li>
-                <Link to="#beauty" className="text-gray-300 hover:text-gold transition-colors">العناية</Link>
-              </li>
+              {categories.length > 0 ? (
+                categories.map((category) => (
+                  <li key={category.id}>
+                    <Link to={category.link} className="text-gray-300 hover:text-gold transition-colors">
+                      {category.name}
+                    </Link>
+                  </li>
+                ))
+              ) : (
+                <>
+                  <li>
+                    <Link to="/category/perfumes" className="text-gray-300 hover:text-gold transition-colors">العطور</Link>
+                  </li>
+                  <li>
+                    <Link to="/category/electronics" className="text-gray-300 hover:text-gold transition-colors">الإلكترونيات</Link>
+                  </li>
+                  <li>
+                    <Link to="/category/fashion" className="text-gray-300 hover:text-gold transition-colors">الأزياء</Link>
+                  </li>
+                  <li>
+                    <Link to="/category/home" className="text-gray-300 hover:text-gold transition-colors">المنزل</Link>
+                  </li>
+                  <li>
+                    <Link to="/category/beauty" className="text-gray-300 hover:text-gold transition-colors">العناية</Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
 

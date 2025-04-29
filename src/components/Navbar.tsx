@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,18 +10,42 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ShoppingCart, User, Search, Menu, X } from 'lucide-react';
+import { Category } from '@/components/CategoryGrid';
 
-const categories = [
-  { name: "العطور", link: "/category/perfumes" },
-  { name: "الإلكترونيات", link: "/category/electronics" },
-  { name: "الأزياء", link: "/category/fashion" },
-  { name: "المنزل", link: "/category/home" },
-  { name: "العناية", link: "/category/beauty" }
+// Default categories if none exist in localStorage
+const defaultCategories = [
+  { id: 1, name: "العطور", image: "", link: "/category/perfumes" },
+  { id: 2, name: "الإلكترونيات", image: "", link: "/category/electronics" },
+  { id: 3, name: "الأزياء", image: "", link: "/category/fashion" },
+  { id: 4, name: "المنزل", image: "", link: "/category/home" },
+  { id: 5, name: "العناية", image: "", link: "/category/beauty" }
 ];
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  // Load categories from localStorage
+  useEffect(() => {
+    const loadCategories = () => {
+      const savedCategories = localStorage.getItem('storeCategories');
+      setCategories(savedCategories ? JSON.parse(savedCategories) : defaultCategories);
+    };
+
+    // Initial load
+    loadCategories();
+
+    // Listen for storage changes (to sync across tabs/components)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'storeCategories') {
+        loadCategories();
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
@@ -46,7 +70,7 @@ const Navbar = () => {
           <nav className="hidden lg:flex space-x-8 rtl:space-x-reverse">
             {categories.map((category) => (
               <Link
-                key={category.name}
+                key={category.id}
                 to={category.link}
                 className="text-gray-700 hover:text-gold transition-colors px-2 py-1"
               >
@@ -100,7 +124,7 @@ const Navbar = () => {
             <nav className="flex flex-col space-y-4">
               {categories.map((category) => (
                 <Link
-                  key={category.name}
+                  key={category.id}
                   to={category.link}
                   className="text-gray-700 hover:text-gold transition-colors py-1 text-right"
                   onClick={() => setIsMenuOpen(false)}
