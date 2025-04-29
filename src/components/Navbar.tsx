@@ -12,11 +12,11 @@ import {
 import { ShoppingCart, User, Search, Menu, X } from 'lucide-react';
 
 const categories = [
-  { name: "العطور", link: "#perfumes" },
-  { name: "الإلكترونيات", link: "#electronics" },
-  { name: "الأزياء", link: "#fashion" },
-  { name: "المنزل", link: "#home" },
-  { name: "العناية", link: "#beauty" }
+  { name: "العطور", link: "/category/perfumes" },
+  { name: "الإلكترونيات", link: "/category/electronics" },
+  { name: "الأزياء", link: "/category/fashion" },
+  { name: "المنزل", link: "/category/home" },
+  { name: "العناية", link: "/category/beauty" }
 ];
 
 const Navbar = () => {
@@ -45,13 +45,13 @@ const Navbar = () => {
           {/* Desktop Nav Links */}
           <nav className="hidden lg:flex space-x-8 rtl:space-x-reverse">
             {categories.map((category) => (
-              <a
+              <Link
                 key={category.name}
-                href={category.link}
+                to={category.link}
                 className="text-gray-700 hover:text-gold transition-colors px-2 py-1"
               >
                 {category.name}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -99,14 +99,14 @@ const Navbar = () => {
           <div className="lg:hidden py-4 animate-fade-in">
             <nav className="flex flex-col space-y-4">
               {categories.map((category) => (
-                <a
+                <Link
                   key={category.name}
-                  href={category.link}
+                  to={category.link}
                   className="text-gray-700 hover:text-gold transition-colors py-1 text-right"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {category.name}
-                </a>
+                </Link>
               ))}
             </nav>
           </div>
