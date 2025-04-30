@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
 import { dailyDeals } from '@/data/products';
 
@@ -77,12 +78,12 @@ const DailyDeals: React.FC = () => {
         </div>
         
         <div className="text-center mt-8">
-          <a
-            href="#all-deals"
+          <Link
+            to="/deals"
             className="inline-block border-2 border-gold text-gold hover:bg-gold hover:text-black transition-colors duration-300 font-semibold py-2 px-6 rounded"
           >
             عرض جميع العروض
-          </a>
+          </Link>
         </div>
       </div>
     </section>
