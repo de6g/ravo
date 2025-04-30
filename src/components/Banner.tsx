@@ -19,7 +19,7 @@ const Banner: React.FC = () => {
           
           <div className="w-full lg:w-1/2">
             <img
-              src="https://images.unsplash.com/photo-1615512065994-cdaff713de31?q=80&w=1080&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=1080&auto=format&fit=crop"
               alt="Winter Sale"
               className="w-full h-56 lg:h-72 object-cover object-center rounded-lg shadow-lg"
             />

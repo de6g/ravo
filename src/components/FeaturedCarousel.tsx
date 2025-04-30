@@ -3,14 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { ChevronRight, ChevronLeft } from "lucide-react";
 
-// Sample data for carousel slides
+// Sample data for carousel slides with high quality images
 const slides = [
   {
     id: 1,
     title: "عروض العطور الفاخرة",
     subtitle: "خصومات تصل إلى 30%",
     description: "اكتشف مجموعة العطور الفاخرة من أرقى الماركات العالمية",
-    image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=1920&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1588776779670-8693f067097c?q=80&w=1920&auto=format&fit=crop",
     buttonText: "تسوق الآن",
     buttonLink: "/category/perfumes",
     bgColor: "bg-gradient-to-r from-amber-50 to-yellow-100"
@@ -91,7 +91,7 @@ const FeaturedCarousel = () => {
               </Button>
             </div>
             
-            {/* Image */}
+            {/* Image with enhanced styling */}
             <div className="w-full md:w-1/2 h-48 sm:h-64 md:h-full order-1 md:order-2 relative">
               <img
                 src={slide.image}

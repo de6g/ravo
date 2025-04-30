@@ -12,6 +12,7 @@ const CategoryPage: React.FC = () => {
   const navigate = useNavigate();
   const [categoryDisplayName, setCategoryDisplayName] = useState<string>('');
   const [categoryImage, setCategoryImage] = useState<string>('');
+  const [categoryProducts, setCategoryProducts] = useState(featuredProducts);
   
   useEffect(() => {
     // Get categories from localStorage
@@ -45,6 +46,11 @@ const CategoryPage: React.FC = () => {
       // If no category is found and no categoryName, redirect to home
       navigate('/');
     }
+    
+    // Filter products by category (in a real app, this would fetch from an API)
+    // For now, we'll just display featured products as a placeholder but we could filter by category
+    setCategoryProducts(featuredProducts);
+    
   }, [categoryName, navigate]);
   
   // Helper function to get default category images
@@ -65,9 +71,6 @@ const CategoryPage: React.FC = () => {
     }
   };
   
-  // Filter products by category (in a real app, this would fetch from an API)
-  // For now, we'll just display featured products as a placeholder
-  
   if (!categoryDisplayName) {
     return null; // Or a loading indicator
   }
@@ -77,8 +80,8 @@ const CategoryPage: React.FC = () => {
       <Navbar />
       
       <main className="flex-grow container mx-auto px-4 py-8">
-        {/* Add category banner */}
-        <div className="mb-8 relative h-48 md:h-64 overflow-hidden rounded-lg">
+        {/* Category banner with improved styling */}
+        <div className="mb-8 relative h-48 md:h-64 overflow-hidden rounded-lg shadow-lg">
           <img 
             src={categoryImage} 
             alt={categoryDisplayName}
@@ -91,7 +94,7 @@ const CategoryPage: React.FC = () => {
         
         <ProductSection 
           title={`منتجات ${categoryDisplayName}`}
-          products={featuredProducts}
+          products={categoryProducts}
         />
       </main>
       
