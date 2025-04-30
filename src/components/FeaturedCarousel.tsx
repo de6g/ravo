@@ -10,9 +10,9 @@ const slides = [
     title: "عروض العطور الفاخرة",
     subtitle: "خصومات تصل إلى 30%",
     description: "اكتشف مجموعة العطور الفاخرة من أرقى الماركات العالمية",
-    image: "https://images.unsplash.com/photo-1615512065994-cdaff713de31?q=80&w=1920&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=1920&auto=format&fit=crop",
     buttonText: "تسوق الآن",
-    buttonLink: "#perfumes",
+    buttonLink: "/category/perfumes",
     bgColor: "bg-gradient-to-r from-amber-50 to-yellow-100"
   },
   {
@@ -22,7 +22,7 @@ const slides = [
     description: "استمتع بأحدث التقنيات وأفضل الأجهزة الإلكترونية بأسعار تنافسية",
     image: "https://images.unsplash.com/photo-1603539444875-76e7684265f6?q=80&w=1920&auto=format&fit=crop",
     buttonText: "اكتشف المزيد",
-    buttonLink: "#electronics",
+    buttonLink: "/category/electronics",
     bgColor: "bg-gradient-to-r from-gray-100 to-gray-200"
   },
   {
@@ -32,7 +32,7 @@ const slides = [
     description: "تصاميم عصرية وأنيقة لكل المناسبات من أرقى الماركات العالمية",
     image: "https://images.unsplash.com/photo-1610652492500-ded49ceeb378?q=80&w=1920&auto=format&fit=crop",
     buttonText: "تسوق الآن",
-    buttonLink: "#fashion",
+    buttonLink: "/category/fashion",
     bgColor: "bg-gradient-to-r from-neutral-100 to-neutral-200"
   }
 ];

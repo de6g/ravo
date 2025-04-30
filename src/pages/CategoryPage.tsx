@@ -11,6 +11,7 @@ const CategoryPage: React.FC = () => {
   const { categoryName } = useParams();
   const navigate = useNavigate();
   const [categoryDisplayName, setCategoryDisplayName] = useState<string>('');
+  const [categoryImage, setCategoryImage] = useState<string>('');
   
   useEffect(() => {
     // Get categories from localStorage
@@ -27,8 +28,10 @@ const CategoryPage: React.FC = () => {
     
     if (category) {
       setCategoryDisplayName(category.name);
+      setCategoryImage(category.imageUrl || getCategoryDefaultImage(categoryName || ''));
     } else if (categoryName) {
       // Fallback: If we can't find the category in localStorage, use some defaults
+      setCategoryImage(getCategoryDefaultImage(categoryName));
       switch(categoryName) {
         case 'perfumes': setCategoryDisplayName('العطور'); break;
         case 'electronics': setCategoryDisplayName('الإلكترونيات'); break;
@@ -43,6 +46,24 @@ const CategoryPage: React.FC = () => {
     }
   }, [categoryName, navigate]);
   
+  // Helper function to get default category images
+  const getCategoryDefaultImage = (category: string): string => {
+    switch(category) {
+      case 'perfumes': 
+        return 'https://images.unsplash.com/photo-1588776779670-8693f067097c?q=80&w=800&auto=format&fit=crop';
+      case 'electronics': 
+        return 'https://images.unsplash.com/photo-1603539444875-76e7684265f6?q=80&w=800&auto=format&fit=crop';
+      case 'fashion': 
+        return 'https://images.unsplash.com/photo-1610652492500-ded49ceeb378?q=80&w=800&auto=format&fit=crop';
+      case 'home': 
+        return 'https://images.unsplash.com/photo-1558317378-76842e43017c?q=80&w=800&auto=format&fit=crop';
+      case 'beauty': 
+        return 'https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=800&auto=format&fit=crop';
+      default: 
+        return 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop';
+    }
+  };
+  
   // Filter products by category (in a real app, this would fetch from an API)
   // For now, we'll just display featured products as a placeholder
   
@@ -55,7 +76,17 @@ const CategoryPage: React.FC = () => {
       <Navbar />
       
       <main className="flex-grow container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">{categoryDisplayName}</h1>
+        {/* Add category banner */}
+        <div className="mb-8 relative h-48 md:h-64 overflow-hidden rounded-lg">
+          <img 
+            src={categoryImage} 
+            alt={categoryDisplayName}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+            <h1 className="text-4xl font-bold text-white">{categoryDisplayName}</h1>
+          </div>
+        </div>
         
         <ProductSection 
           title={`منتجات ${categoryDisplayName}`}
