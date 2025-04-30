@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -62,7 +61,7 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="text-2xl font-bold text-black">
-              <span className="text-gold">سوق</span>كم
+              <span className="text-gold">را</span>فو
             </Link>
           </div>
 

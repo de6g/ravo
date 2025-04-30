@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Category } from './CategoryGrid';
@@ -20,7 +19,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-xl font-bold mb-4 text-gold">سوقكم</h3>
+            <h3 className="text-xl font-bold mb-4 text-gold">رافو</h3>
             <p className="text-sm text-gray-300">
               منصة تسوق إلكتروني رائدة في المملكة العربية السعودية، نقدم أفضل المنتجات بأفضل الأسعار مع خدمة توصيل سريعة وموثوقة.
             </p>
@@ -106,7 +105,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="mt-8 text-center text-gray-500 text-sm">
-          <p>© {new Date().getFullYear()} سوقكم. جميع الحقوق محفوظة</p>
+          <p>© {new Date().getFullYear()} رافو. جميع الحقوق محفوظة</p>
         </div>
       </div>
     </footer>

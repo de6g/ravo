@@ -8,7 +8,7 @@ const Banner: React.FC = () => {
         <div className="flex flex-col lg:flex-row items-center justify-between">
           <div className="w-full lg:w-1/2 mb-8 lg:mb-0 text-center lg:text-right">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4">عروض الشتاء <span className="text-gold">خصومات تصل إلى 50%</span></h2>
-            <p className="text-lg mb-6">استمتع بأقوى العروض والخصومات لفصل الشتاء على جميع المنتجات</p>
+            <p className="text-lg mb-6">استمتع بأقوى العروض والخصومات لفصل الشتاء من رافو على جميع المنتجات</p>
             <a
               href="#winter-sale"
               className="inline-block bg-gold hover:bg-gold-dark text-black font-semibold py-3 px-8 rounded-lg transition-colors duration-300"
