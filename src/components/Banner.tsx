@@ -3,7 +3,7 @@ import React from 'react';
 
 const Banner: React.FC = () => {
   return (
-    <section className="py-12 bg-black text-white">
+    <section className="py-12 bg-gradient-to-r from-amber-50 to-yellow-100 text-black">
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row items-center justify-between">
           <div className="w-full lg:w-1/2 mb-8 lg:mb-0 text-center lg:text-right">
@@ -22,6 +22,7 @@ const Banner: React.FC = () => {
               src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=1080&auto=format&fit=crop"
               alt="Winter Sale"
               className="w-full h-56 lg:h-72 object-cover object-center rounded-lg shadow-lg"
+              loading="lazy"
             />
           </div>
         </div>

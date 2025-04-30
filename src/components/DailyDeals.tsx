@@ -1,50 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import ProductCard from './ProductCard';
-
-// Sample data for daily deals
-const dailyDeals = [
-  {
-    id: 1,
-    name: "عطر مونت بلانك اكسبلورر",
-    price: 349.99,
-    originalPrice: 499.99,
-    discountPercentage: 30,
-    image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=800&auto=format&fit=crop",
-    isNew: false,
-    rating: 4.7
-  },
-  {
-    id: 2,
-    name: "سماعات سوني لاسلكية مع إلغاء الضوضاء",
-    price: 899.99,
-    originalPrice: 1299.99,
-    discountPercentage: 30,
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop",
-    isNew: false,
-    rating: 4.9
-  },
-  {
-    id: 3,
-    name: "قميص رجالي كلاسيكي",
-    price: 149.99,
-    originalPrice: 249.99,
-    discountPercentage: 40,
-    image: "https://images.unsplash.com/photo-1620012253295-c15cc3e65df4?q=80&w=800&auto=format&fit=crop",
-    isNew: false,
-    rating: 4.5
-  },
-  {
-    id: 4,
-    name: "آيفون 14 برو ماكس - 256 جيجابايت",
-    price: 5199.99,
-    originalPrice: 5899.99,
-    discountPercentage: 12,
-    image: "https://images.unsplash.com/photo-1624277897465-a89748fe4021?q=80&w=800&auto=format&fit=crop",
-    isNew: true,
-    rating: 4.8
-  }
-];
+import { dailyDeals } from '@/data/products';
 
 const DailyDeals: React.FC = () => {
   const [timeLeft, setTimeLeft] = useState({

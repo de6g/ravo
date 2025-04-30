@@ -61,7 +61,7 @@ const FeaturedCarousel = () => {
   }, []);
 
   return (
-    <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden rounded-lg">
+    <div className="relative h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden rounded-lg shadow-xl">
       {/* Slides */}
       {slides.map((slide, index) => (
         <div
@@ -97,6 +97,7 @@ const FeaturedCarousel = () => {
                 src={slide.image}
                 alt={slide.title}
                 className="w-full h-full object-cover object-center rounded-lg shadow-lg"
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-l from-transparent to-black/5 rounded-lg"></div>
             </div>

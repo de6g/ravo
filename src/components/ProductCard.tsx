@@ -26,7 +26,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   rating
 }) => {
   return (
-    <div className="product-card overflow-hidden group">
+    <div className="product-card bg-white rounded-lg shadow-md overflow-hidden group">
       <Link to={`/product/${id}`} className="block relative">
         {/* Product Image */}
         <div className="relative h-52 overflow-hidden">
@@ -34,6 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             src={image} 
             alt={name} 
             className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105" 
+            loading="lazy"
           />
           
           {/* Badges */}

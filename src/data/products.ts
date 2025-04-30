@@ -86,3 +86,47 @@ export const newArrivals = [
     rating: 4.6
   }
 ];
+
+// Daily deals data
+export const dailyDeals = [
+  {
+    id: 1,
+    name: "عطر مونت بلانك اكسبلورر",
+    price: 349.99,
+    originalPrice: 499.99,
+    discountPercentage: 30,
+    image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=800&auto=format&fit=crop",
+    isNew: false,
+    rating: 4.7
+  },
+  {
+    id: 2,
+    name: "سماعات سوني لاسلكية مع إلغاء الضوضاء",
+    price: 899.99,
+    originalPrice: 1299.99,
+    discountPercentage: 30,
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop",
+    isNew: false,
+    rating: 4.9
+  },
+  {
+    id: 3,
+    name: "آيفون 14 برو ماكس - 256 جيجابايت",
+    price: 5199.99,
+    originalPrice: 5899.99,
+    discountPercentage: 12,
+    image: "https://images.unsplash.com/photo-1624277897465-a89748fe4021?q=80&w=800&auto=format&fit=crop",
+    isNew: false,
+    rating: 4.8
+  },
+  {
+    id: 4,
+    name: "مكنسة كهربائية ذكية",
+    price: 1299.99,
+    originalPrice: 1599.99,
+    discountPercentage: 18,
+    image: "https://images.unsplash.com/photo-1558317378-76842e43017c?q=80&w=800&auto=format&fit=crop",
+    isNew: true,
+    rating: 4.6
+  }
+];
