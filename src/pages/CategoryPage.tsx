@@ -28,7 +28,8 @@ const CategoryPage: React.FC = () => {
     
     if (category) {
       setCategoryDisplayName(category.name);
-      setCategoryImage(category.imageUrl || getCategoryDefaultImage(categoryName || ''));
+      // Use imageUrl if available, otherwise use image property (backward compatibility)
+      setCategoryImage(category.imageUrl || category.image || getCategoryDefaultImage(categoryName || ''));
     } else if (categoryName) {
       // Fallback: If we can't find the category in localStorage, use some defaults
       setCategoryImage(getCategoryDefaultImage(categoryName));

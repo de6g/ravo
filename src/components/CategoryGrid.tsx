@@ -18,6 +18,7 @@ export interface Category {
   id: number;
   name: string;
   image: string;
+  imageUrl?: string; // Added this property to match what's used in CategoryPage.tsx
   link: string;
 }
 
