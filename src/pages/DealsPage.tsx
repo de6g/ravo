@@ -6,12 +6,70 @@ import ProductCard from '@/components/ProductCard';
 import { dailyDeals } from '@/data/products';
 import { useNavigate } from 'react-router-dom';
 
+// Define product category types
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  originalPrice: number | null;
+  discountPercentage: number | null;
+  image: string;
+  isNew: boolean;
+  rating: number;
+  category?: string; // Add category property
+}
+
 const DealsPage: React.FC = () => {
+  const navigate = useNavigate();
   const [timeLeft, setTimeLeft] = useState({
     hours: 23,
     minutes: 59,
     seconds: 59
   });
+  
+  // Add categories and active category state
+  const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  
+  // Enhanced deals with categories
+  const dealsWithCategories: Product[] = [
+    ...dailyDeals.map(product => ({
+      ...product,
+      category: getCategoryForProduct(product.id)
+    })),
+    // Additional products from duplicates but with categories
+    ...dailyDeals.map(product => ({
+      ...product,
+      id: product.id + 100, // Ensure unique IDs for duplicates
+      category: getCategoryForProduct(product.id)
+    }))
+  ];
+
+  // Helper function to assign categories to products
+  function getCategoryForProduct(id: number): string {
+    // Distribute products across categories based on ID
+    const productId = id > 100 ? id - 100 : id; // Handle duplicate IDs
+    switch (productId % 5) {
+      case 0: return "perfumes";
+      case 1: return "electronics"; 
+      case 2: return "fashion";
+      case 3: return "beauty";
+      case 4: return "home";
+      default: return "other";
+    }
+  }
+  
+  // Filter products when active category changes
+  useEffect(() => {
+    if (activeCategory === "all") {
+      setFilteredProducts(dealsWithCategories);
+    } else {
+      const filtered = dealsWithCategories.filter(
+        product => product.category === activeCategory
+      );
+      setFilteredProducts(filtered);
+    }
+  }, [activeCategory]);
   
   // Countdown timer
   useEffect(() => {
@@ -35,6 +93,15 @@ const DealsPage: React.FC = () => {
 
     return () => clearTimeout(timer);
   }, [timeLeft]);
+
+  // Navigate to category page function
+  const handleCategoryClick = (category: string) => {
+    if (category === "all") {
+      setActiveCategory("all");
+    } else {
+      setActiveCategory(category);
+    }
+  };
 
   return (
     <div dir="rtl" className="min-h-screen flex flex-col bg-white">
@@ -77,45 +144,67 @@ const DealsPage: React.FC = () => {
           <div className="container mx-auto px-4">
             <h2 className="section-title text-center mb-8">جميع العروض</h2>
             
-            {/* Filter Categories (optional) */}
+            {/* Filter Categories - now with functionality */}
             <div className="mb-8 flex flex-wrap gap-2 justify-center">
-              <button className="px-4 py-2 rounded-full bg-gold text-black font-medium">الكل</button>
-              <button className="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">الإلكترونيات</button>
-              <button className="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">الأزياء</button>
-              <button className="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">العطور</button>
-              <button className="px-4 py-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors">المنزل</button>
+              <button 
+                className={`px-4 py-2 rounded-full transition-colors ${activeCategory === "all" ? "bg-gold text-black font-medium" : "bg-gray-100 hover:bg-gray-200"}`} 
+                onClick={() => handleCategoryClick("all")}
+              >
+                الكل
+              </button>
+              <button 
+                className={`px-4 py-2 rounded-full transition-colors ${activeCategory === "electronics" ? "bg-gold text-black font-medium" : "bg-gray-100 hover:bg-gray-200"}`} 
+                onClick={() => handleCategoryClick("electronics")}
+              >
+                الإلكترونيات
+              </button>
+              <button 
+                className={`px-4 py-2 rounded-full transition-colors ${activeCategory === "fashion" ? "bg-gold text-black font-medium" : "bg-gray-100 hover:bg-gray-200"}`} 
+                onClick={() => handleCategoryClick("fashion")}
+              >
+                الأزياء
+              </button>
+              <button 
+                className={`px-4 py-2 rounded-full transition-colors ${activeCategory === "perfumes" ? "bg-gold text-black font-medium" : "bg-gray-100 hover:bg-gray-200"}`} 
+                onClick={() => handleCategoryClick("perfumes")}
+              >
+                العطور
+              </button>
+              <button 
+                className={`px-4 py-2 rounded-full transition-colors ${activeCategory === "home" ? "bg-gold text-black font-medium" : "bg-gray-100 hover:bg-gray-200"}`} 
+                onClick={() => handleCategoryClick("home")}
+              >
+                المنزل
+              </button>
+              <button 
+                className={`px-4 py-2 rounded-full transition-colors ${activeCategory === "beauty" ? "bg-gold text-black font-medium" : "bg-gray-100 hover:bg-gray-200"}`} 
+                onClick={() => handleCategoryClick("beauty")}
+              >
+                العناية
+              </button>
             </div>
             
-            {/* Products Grid - display all deals with improved grid for more products */}
+            {/* Products Grid - now using filtered products */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {/* Show all daily deals */}
-              {dailyDeals.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  name={product.name}
-                  price={product.price}
-                  originalPrice={product.originalPrice}
-                  discountPercentage={product.discountPercentage}
-                  image={product.image}
-                  isNew={product.isNew}
-                  rating={product.rating}
-                />
-              ))}
-              {/* Show dailyDeals again to have more products on the deals page */}
-              {dailyDeals.map((product) => (
-                <ProductCard
-                  key={`duplicate-${product.id}`}
-                  id={product.id}
-                  name={product.name}
-                  price={product.price}
-                  originalPrice={product.originalPrice}
-                  discountPercentage={product.discountPercentage}
-                  image={product.image}
-                  isNew={product.isNew}
-                  rating={product.rating}
-                />
-              ))}
+              {filteredProducts.length > 0 ? (
+                filteredProducts.map((product) => (
+                  <ProductCard
+                    key={product.id}
+                    id={product.id}
+                    name={product.name}
+                    price={product.price}
+                    originalPrice={product.originalPrice}
+                    discountPercentage={product.discountPercentage}
+                    image={product.image}
+                    isNew={product.isNew}
+                    rating={product.rating}
+                  />
+                ))
+              ) : (
+                <div className="col-span-full text-center py-10">
+                  <p className="text-gray-500">لا توجد منتجات متاحة في هذه الفئة.</p>
+                </div>
+              )}
             </div>
           </div>
         </section>
