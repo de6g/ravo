@@ -8,35 +8,15 @@ import { Input } from "@/components/ui/input";
 import { Trash2, Minus, Plus, ArrowLeft } from 'lucide-react';
 
 // Sample cart items data
-const initialCartItems = [
-  {
-    id: 1,
-    name: "عطر مونت بلانك اكسبلورر",
-    price: 349.99,
-    image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=800&auto=format&fit=crop",
-    quantity: 1,
-    maxQuantity: 10
-  },
-  {
-    id: 5,
-    name: "عطر توم فورد عود وود - 100 مل",
-    price: 1599.99,
-    image: "https://images.unsplash.com/photo-1588776779670-8693f067097c?q=80&w=800&auto=format&fit=crop",
-    quantity: 2,
-    maxQuantity: 5
-  },
-  {
-    id: 7,
-    name: "حقيبة يد نسائية من الجلد الطبيعي",
-    price: 799.99,
-    image: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?q=80&w=800&auto=format&fit=crop",
-    quantity: 1,
-    maxQuantity: 3
-  }
-];
+import { useCartStore } from '@/hooks/cartStore';
+
+const cartItems = useCartStore((state) => state.items);
+const removeItemFromStore = useCartStore((state) => state.removeFromCart);
+const addToCart = useCartStore((state) => state.addToCart);
+
+
 
 const Cart: React.FC = () => {
-  const [cartItems, setCartItems] = useState(initialCartItems);
   const [couponCode, setCouponCode] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
 
@@ -48,17 +28,14 @@ const Cart: React.FC = () => {
 
   // Update item quantity
   const updateQuantity = (itemId: number, newQuantity: number) => {
-    setCartItems(prevItems => 
-      prevItems.map(item => 
-        item.id === itemId 
-          ? { 
-              ...item, 
-              quantity: Math.max(1, Math.min(newQuantity, item.maxQuantity)) 
-            } 
-          : item
-      )
-    );
-  };
+  const item = cartItems.find(item => item.id === itemId);
+  if (!item) return;
+
+  const updatedItem = { ...item, quantity: Math.max(1, Math.min(newQuantity, item.maxQuantity)) };
+  removeItem(itemId); // من store
+  addToCart(updatedItem); // من store
+};
+
 
   // Remove item from cart
   const removeItem = (itemId: number) => {
