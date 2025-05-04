@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useCartStore } from '@/hooks/cartStore';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from "@/components/ui/button";
@@ -105,6 +106,7 @@ const ProductDetail: React.FC = () => {
   const [mainImage, setMainImage] = useState(product.images[0]);
   const [quantity, setQuantity] = useState(1);
   const [isWishlist, setIsWishlist] = useState(false);
+  const addToCart = useCartStore((state) => state.addToCart);
 
   const handleQuantityChange = (amount: number) => {
     const newQuantity = quantity + amount;
@@ -116,6 +118,15 @@ const ProductDetail: React.FC = () => {
   const toggleWishlist = () => {
     setIsWishlist(!isWishlist);
   };
+  const handleAddToCart = () => {
+  addToCart({
+    id: product.id,
+    name: product.name,
+    price: product.price,
+    image: product.images[0],
+    quantity: quantity
+  });
+};
 
   return (
     <div dir="rtl" className="min-h-screen flex flex-col bg-white">
@@ -259,10 +270,14 @@ const ProductDetail: React.FC = () => {
                 </div>
                 
                 <div className="flex flex-wrap gap-3">
-                  <Button className="bg-gold hover:bg-gold-dark text-black flex-1">
-                    <ShoppingCart className="ml-2 h-5 w-5" />
-                    أضف إلى السلة
-                  </Button>
+                  <Button 
+  className="bg-gold hover:bg-gold-dark text-black flex-1"
+  onClick={handleAddToCart}
+>
+  <ShoppingCart className="ml-2 h-5 w-5" />
+  أضف إلى السلة
+</Button>
+
                   
                   <Button variant="outline" onClick={toggleWishlist}>
                     <Heart className={`h-5 w-5 ${isWishlist ? 'fill-red-500 text-red-500' : ''}`} />
