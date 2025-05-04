@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
@@ -6,43 +5,34 @@ import Footer from '@/components/Footer';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Trash2, Minus, Plus, ArrowLeft } from 'lucide-react';
-
-// Sample cart items data
 import { useCartStore } from '@/hooks/cartStore';
 
-const cartItems = useCartStore((state) => state.items);
-const removeItemFromStore = useCartStore((state) => state.removeFromCart);
-const addToCart = useCartStore((state) => state.addToCart);
-
-
-
 const Cart: React.FC = () => {
+  const cartItems = useCartStore((state) => state.items);
+  const removeItemFromStore = useCartStore((state) => state.removeFromCart);
+  const addToCart = useCartStore((state) => state.addToCart);
+
   const [couponCode, setCouponCode] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
 
-  // Calculate cart totals
   const subtotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   const shipping = subtotal > 500 ? 0 : 50;
   const discount = couponApplied ? subtotal * 0.1 : 0;
   const total = subtotal + shipping - discount;
 
-  // Update item quantity
   const updateQuantity = (itemId: number, newQuantity: number) => {
-  const item = cartItems.find(item => item.id === itemId);
-  if (!item) return;
-
-  const updatedItem = { ...item, quantity: Math.max(1, Math.min(newQuantity, item.maxQuantity)) };
-  removeItem(itemId); // من store
-  addToCart(updatedItem); // من store
-};
-
-
-  // Remove item from cart
-  const removeItem = (itemId: number) => {
-    setCartItems(prevItems => prevItems.filter(item => item.id !== itemId));
+    const item = cartItems.find(item => item.id === itemId);
+    if (!item) return;
+    const updatedItem = { ...item, quantity: Math.max(1, Math.min(newQuantity, item.maxQuantity)) };
+    removeItemFromStore(itemId);
+    addToCart(updatedItem);
   };
 
-  // Apply coupon code
+  // ✅ تصحيح هنا
+  const removeItem = (itemId: number) => {
+    removeItemFromStore(itemId);
+  };
+
   const applyCoupon = () => {
     if (couponCode.toUpperCase() === "SAVE10") {
       setCouponApplied(true);
@@ -54,17 +44,16 @@ const Cart: React.FC = () => {
   return (
     <div dir="rtl" className="min-h-screen flex flex-col bg-white">
       <Navbar />
-      
+
       <main className="flex-grow py-8">
         <div className="container mx-auto px-4">
           <h1 className="text-3xl font-bold mb-6">سلة التسوق</h1>
-          
+
           {cartItems.length > 0 ? (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Cart Items */}
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-lg overflow-hidden shadow-sm border border-gray-100">
-                  {/* Table Header */}
                   <div className="hidden md:grid grid-cols-7 gap-4 p-4 bg-gray-50 border-b border-gray-100 font-medium">
                     <div className="col-span-3">المنتج</div>
                     <div className="text-center">السعر</div>
@@ -72,16 +61,14 @@ const Cart: React.FC = () => {
                     <div className="text-center">الإجمالي</div>
                     <div className="text-center"></div>
                   </div>
-                  
-                  {/* Cart Items */}
+
                   {cartItems.map((item) => (
                     <div key={item.id} className="grid grid-cols-1 md:grid-cols-7 gap-4 p-4 border-b border-gray-100 items-center">
-                      {/* Product */}
                       <div className="col-span-1 md:col-span-3 flex items-center">
                         <Link to={`/product/${item.id}`} className="flex-shrink-0">
-                          <img 
-                            src={item.image} 
-                            alt={item.name} 
+                          <img
+                            src={item.image}
+                            alt={item.name}
                             className="w-20 h-20 object-cover rounded"
                           />
                         </Link>
@@ -91,16 +78,12 @@ const Cart: React.FC = () => {
                           </Link>
                         </div>
                       </div>
-                      
-                      {/* Price */}
+
                       <div className="md:text-center">
-                        <span className="md:hidden font-medium">السعر: </span>
                         <span>{item.price} ريال</span>
                       </div>
-                      
-                      {/* Quantity */}
+
                       <div className="flex justify-start md:justify-center items-center">
-                        <span className="md:hidden font-medium ml-3">الكمية: </span>
                         <div className="flex items-center border rounded-md">
                           <Button
                             type="button"
@@ -125,14 +108,11 @@ const Cart: React.FC = () => {
                           </Button>
                         </div>
                       </div>
-                      
-                      {/* Total */}
-                      <div className="md:text-center">
-                        <span className="md:hidden font-medium">الإجمالي: </span>
-                        <span className="font-bold">{(item.price * item.quantity).toFixed(2)} ريال</span>
+
+                      <div className="md:text-center font-bold">
+                        {(item.price * item.quantity).toFixed(2)} ريال
                       </div>
-                      
-                      {/* Remove */}
+
                       <div className="flex justify-end md:justify-center">
                         <Button
                           type="button"
@@ -146,11 +126,10 @@ const Cart: React.FC = () => {
                       </div>
                     </div>
                   ))}
-                  
-                  {/* Continue Shopping Button */}
+
                   <div className="p-4 text-right">
-                    <Link 
-                      to="/" 
+                    <Link
+                      to="/"
                       className="inline-flex items-center text-gold hover:underline"
                     >
                       <ArrowLeft className="ml-2 h-4 w-4" />
@@ -159,45 +138,34 @@ const Cart: React.FC = () => {
                   </div>
                 </div>
               </div>
-              
+
               {/* Order Summary */}
               <div className="lg:col-span-1">
                 <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-4">
                   <h2 className="text-xl font-bold mb-4">ملخص الطلب</h2>
-                  
-                  {/* Subtotal */}
+
                   <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-700">المجموع الفرعي:</span>
+                    <span>المجموع الفرعي:</span>
                     <span>{subtotal.toFixed(2)} ريال</span>
                   </div>
-                  
-                  {/* Shipping */}
+
                   <div className="flex justify-between py-2 border-b border-gray-100">
-                    <span className="text-gray-700">الشحن:</span>
-                    <span>
-                      {shipping === 0 ? (
-                        <span className="text-green-500">مجاني</span>
-                      ) : (
-                        `${shipping} ريال`
-                      )}
-                    </span>
+                    <span>الشحن:</span>
+                    <span>{shipping === 0 ? 'مجاني' : `${shipping} ريال`}</span>
                   </div>
-                  
-                  {/* Discount */}
+
                   {couponApplied && (
                     <div className="flex justify-between py-2 border-b border-gray-100">
-                      <span className="text-gray-700">الخصم:</span>
+                      <span>الخصم:</span>
                       <span className="text-green-500">- {discount.toFixed(2)} ريال</span>
                     </div>
                   )}
-                  
-                  {/* Total */}
+
                   <div className="flex justify-between py-3 font-bold text-lg">
                     <span>الإجمالي:</span>
                     <span>{total.toFixed(2)} ريال</span>
                   </div>
-                  
-                  {/* Coupon Code */}
+
                   <div className="mt-4">
                     <label htmlFor="coupon" className="block text-sm font-medium text-gray-700 mb-1">
                       كود الخصم
@@ -225,8 +193,7 @@ const Cart: React.FC = () => {
                       <p className="text-green-500 text-sm mt-1">تم تطبيق كود الخصم بنجاح!</p>
                     )}
                   </div>
-                  
-                  {/* Checkout Button */}
+
                   <div className="mt-6">
                     <Button
                       className="w-full bg-gold hover:bg-gold-dark text-black text-lg py-6"
@@ -235,8 +202,7 @@ const Cart: React.FC = () => {
                       <Link to="/checkout">إتمام عملية الشراء</Link>
                     </Button>
                   </div>
-                  
-                  {/* Payment Methods */}
+
                   <div className="mt-4 flex justify-center gap-2">
                     <span className="bg-gray-100 p-2 rounded text-xs">Visa</span>
                     <span className="bg-gray-100 p-2 rounded text-xs">Mastercard</span>
@@ -254,9 +220,9 @@ const Cart: React.FC = () => {
                 </svg>
               </div>
               <h2 className="text-2xl font-bold mb-2">سلة التسوق فارغة</h2>
-              <p className="text-gray-600 mb-6">لم تقم بإضافة أي منتجات إلى سلة التسوق بعد.</p>
-              <Link 
-                to="/" 
+              <p className="text-gray-600 mb-6">لم تقم بإضافة أي منتجات بعد.</p>
+              <Link
+                to="/"
                 className="inline-block bg-gold hover:bg-gold-dark text-black font-medium px-6 py-3 rounded-md transition-colors"
               >
                 تصفح المنتجات
@@ -265,7 +231,7 @@ const Cart: React.FC = () => {
           )}
         </div>
       </main>
-      
+
       <Footer />
     </div>
   );
