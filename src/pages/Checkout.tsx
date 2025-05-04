@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from "@/components/ui/button";
@@ -14,8 +14,11 @@ const Checkout: React.FC = () => {
   const [step, setStep] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
 
+  const navigate = useNavigate();
+
   // Cart data from Zustand
   const cart = useCartStore(state => state.cart);
+  const clearCart = useCartStore(state => state.clearCart);
 
   // حساب الإجماليات
   const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
@@ -61,6 +64,13 @@ const Checkout: React.FC = () => {
     window.scrollTo(0, 0);
   };
 
+  // زر تأكيد الطلب — أهم خطوة
+  const confirmOrder = () => {
+    const orderId = `ORD-${Math.floor(1000 + Math.random() * 9000)}`;
+    clearCart();
+    navigate("/thank-you", { state: { orderId } });
+  };
+
   return (
     <div dir="rtl" className="min-h-screen flex flex-col bg-white">
       <Navbar />
@@ -69,27 +79,15 @@ const Checkout: React.FC = () => {
         <div className="container mx-auto px-4">
           <h1 className="text-3xl font-bold mb-6">إتمام عملية الشراء</h1>
 
-          {/* Checkout Steps Navigation */}
-          {/* نفس كود الـ Steps بدون تعديل */}
-
-          {/* المحتوى الرئيسي */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Checkout Form */}
             <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow-sm">
-              {/* Steps 1 و 2 و 3 نفس الموجود بدون تغيير */}
-
-              {/* Step 1 و Step 2 و Step 3 */}
-              {/* انسخ من الكود السابق — مافيه تغيير هنا */}
-
-              {/* ... */}
+              {/* ممكن تحط بيانات الفورم هنا لو تبغى */}
             </div>
 
-            {/* Order Summary */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-lg shadow-sm p-6 sticky top-20">
                 <h2 className="text-lg font-bold mb-4">ملخص الطلب</h2>
 
-                {/* Items */}
                 <div className="mb-6 space-y-3">
                   {cart.map((item) => (
                     <div key={item.id} className="flex justify-between">
@@ -104,7 +102,6 @@ const Checkout: React.FC = () => {
                   ))}
                 </div>
 
-                {/* Totals */}
                 <div className="border-t border-gray-100 pt-4">
                   <div className="flex justify-between py-1">
                     <span className="text-gray-700">المجموع الفرعي:</span>
@@ -135,6 +132,15 @@ const Checkout: React.FC = () => {
                   <div className="text-xs text-gray-500 mt-2">
                     * الأسعار شاملة ضريبة القيمة المضافة 15%
                   </div>
+
+                  {/* زر تأكيد الطلب */}
+                  <Button
+                    className="w-full mt-6 bg-yellow-400 hover:bg-yellow-500 text-black font-bold text-lg py-3"
+                    onClick={confirmOrder}
+                  >
+                    تأكيد الطلب
+                  </Button>
+
                 </div>
               </div>
             </div>
