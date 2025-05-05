@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import ProductDetail from "./pages/ProductDetail";
+import ThankYou from "./pages/thank-you";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
@@ -35,6 +36,9 @@ const App = () => (
           
           {/* Category Routes */}
           <Route path="/category/:categoryName" element={<CategoryPage />} />
+         
+{/* Custom Pages */}
+<Route path="/thank-you" element={<ThankYou />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
