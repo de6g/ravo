@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import useCartStore from '@/store/cartStore'; // ربط بيانات السلة
+import useCartStore from '@/hooks/cartStore';
 
 const Checkout: React.FC = () => {
   const [step, setStep] = useState(1);
